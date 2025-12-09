@@ -1,4 +1,4 @@
-package com.sandra.usuario.businness.dto;
+package com.sandra.usuario.infrastructure.business.dto;
 
 import lombok.*;
 
