@@ -1,8 +1,7 @@
 package com.sandra.usuario.controller;
 
 
-import com.sandra.usuario.businness.UsuarioService;
-import com.sandra.usuario.businness.dto.UsuarioDTO;
+import com.sandra.usuario.infrastructure.business.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +20,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO){
+    public ResponseEntity<com.sandra.usuario.businness.dto.UsuarioDTO> salvaUsuario(@RequestBody com.sandra.usuario.businness.dto.UsuarioDTO usuarioDTO){
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDTO));
 
     }
