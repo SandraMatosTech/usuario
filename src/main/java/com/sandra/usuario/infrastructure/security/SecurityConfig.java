@@ -1,4 +1,4 @@
-package com.sandra.usuario.infrastructure.security;
+package com.sandra.usuario.infra.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

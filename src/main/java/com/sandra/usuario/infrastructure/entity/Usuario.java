@@ -1,4 +1,4 @@
-package com.sandra.usuario.entity;
+package com.sandra.usuario.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

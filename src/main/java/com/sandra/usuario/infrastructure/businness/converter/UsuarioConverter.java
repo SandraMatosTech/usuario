@@ -3,9 +3,9 @@ package com.sandra.usuario.businness.converter;
 import com.sandra.usuario.businness.dto.EnderecoDTO;
 import com.sandra.usuario.businness.dto.TelefoneDTO;
 import com.sandra.usuario.businness.dto.UsuarioDTO;
-import com.sandra.usuario.entity.Endereco;
-import com.sandra.usuario.entity.Telefone;
-import com.sandra.usuario.entity.Usuario;
+import com.sandra.usuario.infrastructure.entity.Endereco;
+import com.sandra.usuario.infrastructure.entity.Telefone;
+import com.sandra.usuario.infrastructure.entity.Usuario;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

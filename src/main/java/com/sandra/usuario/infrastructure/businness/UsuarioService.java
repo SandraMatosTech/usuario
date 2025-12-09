@@ -3,8 +3,8 @@ package com.sandra.usuario.businness;
 
 import com.sandra.usuario.businness.converter.UsuarioConverter;
 import com.sandra.usuario.businness.dto.UsuarioDTO;
-import com.sandra.usuario.entity.Usuario;
-import com.sandra.usuario.repository.UsuarioRepository;
+import com.sandra.usuario.infrastructure.entity.Usuario;
+import com.sandra.usuario.infrastructure.entity.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

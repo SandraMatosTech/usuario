@@ -1,4 +1,4 @@
-package com.sandra.usuario.infrastructure.security;
+package com.sandra.usuario.infra.security;
 
 import com.sandra.aprendendo_spring.infraestructure.entity.Usuario;
 import com.sandra.aprendendo_spring.infraestructure.repository.UsuarioRepository;

@@ -1,6 +1,7 @@
-package com.sandra.usuario.repository;
+package com.sandra.usuario.infrastructure.entity.repository;
 
-import com.sandra.aprendendo_spring.infraestructure.entity.Telefone;
+
+import com.sandra.usuario.infrastructure.entity.Telefone;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TelefoneRepository extends JpaRepository<Telefone, Long> {
