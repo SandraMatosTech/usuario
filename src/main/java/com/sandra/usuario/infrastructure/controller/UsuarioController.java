@@ -1,4 +1,4 @@
-package com.sandra.usuario.controller;
+package com.sandra.usuario.infrastructure.controller;
 
 
 import com.sandra.usuario.infrastructure.business.UsuarioService;
@@ -20,7 +20,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<com.sandra.usuario.businness.dto.UsuarioDTO> salvaUsuario(@RequestBody com.sandra.usuario.businness.dto.UsuarioDTO usuarioDTO){
+    public ResponseEntity<com.sandra.usuario.infrastructure.business.dto.UsuarioDTO> salvaUsuario(@RequestBody com.sandra.usuario.infrastructure.business.dto.UsuarioDTO usuarioDTO){
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDTO));
 
     }
