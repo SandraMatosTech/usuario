@@ -1,4 +1,4 @@
-package com.sandra.usuario.infraestructure.security;
+package com.sandra.usuario.infrastructure.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
