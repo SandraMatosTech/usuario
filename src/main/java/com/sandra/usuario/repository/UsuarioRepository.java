@@ -1,6 +1,7 @@
 package com.sandra.usuario.repository;
 
-import com.sandra.aprendendo_spring.infraestructure.entity.Usuario;
+
+import com.sandra.usuario.infrastructure.entity.Usuario;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
