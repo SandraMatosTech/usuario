@@ -1,5 +1,8 @@
 package com.sandra.usuario.infrastructure.business.converter;
 
+import com.sandra.usuario.infrastructure.business.dto.EnderecoDTO;
+import com.sandra.usuario.infrastructure.business.dto.TelefoneDTO;
+import com.sandra.usuario.infrastructure.business.dto.UsuarioDTO;
 import com.sandra.usuario.infrastructure.entity.Endereco;
 import com.sandra.usuario.infrastructure.entity.Telefone;
 import com.sandra.usuario.infrastructure.entity.Usuario;
@@ -13,78 +16,101 @@ public class UsuarioConverter {
     // ===============================
     //   DTO → ENTITY
     // ===============================
-    public Usuario paraUsuario(com.sandra.usuario.infrastructure.business.dto.UsuarioDTO dto) {
-        return Usuario.builder()
+    public Usuario paraUsuario(UsuarioDTO dto) {
+
+        Usuario usuario = Usuario.builder()
                 .nome(dto.getNome())
                 .email(dto.getEmail())
                 .senha(dto.getSenha())
-                .enderecos(paraListaEnderecoEntity(dto.getEnderecos()))
-                .telefones(paraListaTelefoneEntity(dto.getTelefones()))
                 .build();
+
+        // -------- ENDEREÇOS --------
+        if (dto.getEnderecos() != null && !dto.getEnderecos().isEmpty()) {
+            List<Endereco> enderecos = dto.getEnderecos().stream()
+                    .map(endDTO -> {
+                        Endereco endereco = paraEndereco(endDTO);
+                        endereco.setUsuario(usuario); // 🔥 vínculo obrigatório
+                        return endereco;
+                    })
+                    .toList();
+
+            usuario.setEnderecos(enderecos);
+        }
+
+        // -------- TELEFONES --------
+        if (dto.getTelefones() != null && !dto.getTelefones().isEmpty()) {
+            List<Telefone> telefones = dto.getTelefones().stream()
+                    .map(telDTO -> {
+                        Telefone telefone = paraTelefone(telDTO);
+                        telefone.setUsuario(usuario); // 🔥 vínculo obrigatório
+                        return telefone;
+                    })
+                    .toList();
+
+            usuario.setTelefones(telefones);
+        }
+
+        return usuario;
     }
 
-    public List<Endereco> paraListaEnderecoEntity(List<com.sandra.usuario.infrastructure.business.dto.EnderecoDTO> dtos){
-        return dtos.stream().map(this::paraEndereco).toList();
-    }
-
-    public Endereco paraEndereco(com.sandra.usuario.infrastructure.business.dto.EnderecoDTO dto){
+    private Endereco paraEndereco(EnderecoDTO dto) {
         return Endereco.builder()
                 .rua(dto.getRua())
                 .numero(dto.getNumero())
-                .cidade(dto.getCidade())
                 .complemento(dto.getComplemento())
-                .cep(dto.getCep())
+                .cidade(dto.getCidade())
                 .estado(dto.getEstado())
+                .cep(dto.getCep())
                 .build();
     }
 
-    public List<Telefone> paraListaTelefoneEntity(List<com.sandra.usuario.infrastructure.business.dto.TelefoneDTO> dtos){
-        return dtos.stream().map(this::paraTelefone).toList();
-    }
-
-    public Telefone paraTelefone(com.sandra.usuario.infrastructure.business.dto.TelefoneDTO dto){
+    private Telefone paraTelefone(TelefoneDTO dto) {
         return Telefone.builder()
-                .ddd(dto.getDdd())
                 .numero(dto.getNumero())
+                .ddd(dto.getDdd())
                 .build();
     }
-
 
     // ===============================
     //   ENTITY → DTO
     // ===============================
-    public com.sandra.usuario.infrastructure.business.dto.UsuarioDTO paraUsuarioDTO(Usuario usuario){
-        return com.sandra.usuario.infrastructure.business.dto.UsuarioDTO.builder()
+    public UsuarioDTO paraUsuarioDTO(Usuario usuario) {
+
+        return UsuarioDTO.builder()
                 .nome(usuario.getNome())
                 .email(usuario.getEmail())
-                .enderecos(paraListaEnderecoDTO(usuario.getEnderecos()))
-                .telefones(paraListaTelefoneDTO(usuario.getTelefones()))
+                .enderecos(
+                        usuario.getEnderecos() != null
+                                ? usuario.getEnderecos().stream()
+                                .map(this::paraEnderecoDTO)
+                                .toList()
+                                : List.of()
+                )
+                .telefones(
+                        usuario.getTelefones() != null
+                                ? usuario.getTelefones().stream()
+                                .map(this::paraTelefoneDTO)
+                                .toList()
+                                : List.of()
+                )
                 .build();
     }
 
-    public List<com.sandra.usuario.infrastructure.business.dto.EnderecoDTO> paraListaEnderecoDTO(List<Endereco> lista){
-        return lista.stream().map(this::paraEnderecoDTO).toList();
-    }
-
-    public com.sandra.usuario.infrastructure.business.dto.EnderecoDTO paraEnderecoDTO(Endereco entity){
-        return com.sandra.usuario.infrastructure.business.dto.EnderecoDTO.builder()
+    private EnderecoDTO paraEnderecoDTO(Endereco entity) {
+        return EnderecoDTO.builder()
                 .rua(entity.getRua())
                 .numero(entity.getNumero())
-                .cidade(entity.getCidade())
                 .complemento(entity.getComplemento())
-                .cep(entity.getCep())
+                .cidade(entity.getCidade())
                 .estado(entity.getEstado())
+                .cep(entity.getCep())
                 .build();
     }
 
-    public List<com.sandra.usuario.infrastructure.business.dto.TelefoneDTO> paraListaTelefoneDTO(List<Telefone> lista){
-        return lista.stream().map(this::paraTelefoneDTO).toList();
-    }
-
-    public com.sandra.usuario.infrastructure.business.dto.TelefoneDTO paraTelefoneDTO(Telefone entity){
-        return com.sandra.usuario.infrastructure.business.dto.TelefoneDTO.builder()
-                .ddd(entity.getDdd())
+    private TelefoneDTO paraTelefoneDTO(Telefone entity) {
+        return TelefoneDTO.builder()
                 .numero(entity.getNumero())
+                .ddd(entity.getDdd())
                 .build();
     }
 }
