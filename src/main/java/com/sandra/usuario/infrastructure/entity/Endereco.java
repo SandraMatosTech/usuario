@@ -1,4 +1,4 @@
-package com.sandra.usuario.entity;
+package com.sandra.usuario.infrastructure.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "endereco")
+@Builder
 public class Endereco {
 
     @Id

@@ -1,4 +1,4 @@
-package com.sandra.usuario.infraestructure.security;
+package com.sandra.usuario.infra.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

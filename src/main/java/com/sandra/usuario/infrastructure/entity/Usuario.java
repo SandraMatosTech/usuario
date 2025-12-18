@@ -1,4 +1,4 @@
-package com.sandra.usuario.entity;
+package com.sandra.usuario.infrastructure.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,6 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "usuario")
+@Builder
+
 public class Usuario implements UserDetails {
 
     @Id

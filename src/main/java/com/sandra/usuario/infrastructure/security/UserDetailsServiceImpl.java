@@ -1,7 +1,7 @@
-package com.sandra.usuario.infraestructure.security;
+package com.sandra.usuario.infrastructure.security;
 
-import com.sandra.aprendendo_spring.infraestructure.entity.Usuario;
-import com.sandra.aprendendo_spring.infraestructure.repository.UsuarioRepository;
+import com.sandra.usuario.infrastructure.entity.Usuario;
+import com.sandra.usuario.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
