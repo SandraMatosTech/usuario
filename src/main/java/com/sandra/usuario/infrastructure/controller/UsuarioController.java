@@ -3,7 +3,7 @@ package com.sandra.usuario.infrastructure.controller;
 import com.sandra.usuario.infrastructure.business.UsuarioService;
 import com.sandra.usuario.infrastructure.business.dto.UsuarioDTO;
 import com.sandra.usuario.infrastructure.entity.Usuario;
-import com.sandra.usuario.infra.security.JwtUtil;
+import com.sandra.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -53,5 +53,9 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping
+    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO dto, @RequestHeader("Authorization")String token){
+        return  ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token,dto));
+    }
 
 }
