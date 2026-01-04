@@ -1,8 +1,10 @@
 package com.sandra.usuario.infrastructure.controller;
 
+
 import com.sandra.usuario.infrastructure.business.UsuarioService;
+import com.sandra.usuario.infrastructure.business.dto.EnderecoDTO;
+import com.sandra.usuario.infrastructure.business.dto.TelefoneDTO;
 import com.sandra.usuario.infrastructure.business.dto.UsuarioDTO;
-import com.sandra.usuario.infrastructure.entity.Usuario;
 import com.sandra.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,9 +23,7 @@ public class UsuarioController {
     private final JwtUtil jwtUtil;
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> salvaUsuario(
-            @RequestBody UsuarioDTO usuarioDTO
-    ) {
+    public ResponseEntity<UsuarioDTO> salvaUsuario(@RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioService.salvaUsuario(usuarioDTO));
     }
 
@@ -35,27 +35,45 @@ public class UsuarioController {
                         usuarioDTO.getSenha()
                 )
         );
-
         return "Bearer " + jwtUtil.generateToken(authentication.getName());
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(
-            @RequestParam("email") String email
-    ) {
-        return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
+    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        UsuarioDTO resultado = usuarioService.buscarUsuarioPorEmail(email);
+        return ResponseEntity.ok(resultado);
     }
 
     @DeleteMapping("/{email}")
-    public ResponseEntity<Void> deleteUsuarioPorEmail(
-            @PathVariable String email) {
+    public ResponseEntity<Void> deleteUsuarioPorEmail(@PathVariable String email) {
         usuarioService.deletaUsuarioPorEmail(email);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO dto, @RequestHeader("Authorization")String token){
-        return  ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token,dto));
+    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(
+            @RequestBody UsuarioDTO dto,
+            @RequestHeader("Authorization") String token) {
+        // O ID aqui deve ser recuperado dentro do Service através do Token
+        // e mapeado de volta para o DTO de retorno.
+        return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
 
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> atualizaEndereco(
+            @RequestBody EnderecoDTO dto,
+            @RequestParam("id") Long id) {
+        // CORREÇÃO: Seta o ID no DTO antes de enviar para o Service
+        dto.setId(id);
+        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> atualizaTelefone(
+            @RequestBody TelefoneDTO dto,
+            @RequestParam("id") Long id) {
+        // CORREÇÃO: Seta o ID no DTO antes de enviar para o Service
+        dto.setId(id);
+        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
+    }
 }
