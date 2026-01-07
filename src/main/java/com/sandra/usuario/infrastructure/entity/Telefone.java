@@ -17,17 +17,17 @@ public class Telefone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // Coluna para número completo, incluindo possíveis formatações
     @Column(name = "numero", length = 20, nullable = false)
     private String numero;
 
     @Column(name = "ddd", length = 3, nullable = false)
     private String ddd;
 
-    // 🔥 CORREÇÃO FUNDAMENTAL (igual ao Endereco)
-    // Impede o loop infinito Usuario → Telefones → Usuario → ...
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @Column(name = "usuario_id")
+    private Long usuario_id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", insertable = false, updatable = false)
     @JsonIgnore
     private Usuario usuario;
 }

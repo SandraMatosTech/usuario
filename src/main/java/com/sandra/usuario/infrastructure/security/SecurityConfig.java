@@ -1,5 +1,7 @@
 package com.sandra.usuario.infra.security;
 
+import com.sandra.usuario.infrastructure.security.JwtRequestFilter;
+import com.sandra.usuario.infrastructure.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

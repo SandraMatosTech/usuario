@@ -18,21 +18,17 @@ public class Endereco {
     private Long id;
 
     private String rua;
-
     private String numero;
-
     private String complemento;
-
     private String cidade;
-
     private String estado;
-
     private String cep;
 
-    // 🔥 CORREÇÃO ESSENCIAL:
-    // Impede loop infinito Usuario → Endereco → Usuario → ...
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
+    @Column(name = "usuario_id")
+    private Long usuario_id; // Campo para o Converter usar
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id", insertable = false, updatable = false) // Solução da aula
     @JsonIgnore
     private Usuario usuario;
 }
