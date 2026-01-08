@@ -10,7 +10,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class UsuarioDTO {
-
     private Long id;
     private String nome;
     private String email;

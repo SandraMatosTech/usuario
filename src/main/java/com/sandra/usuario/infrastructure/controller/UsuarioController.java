@@ -1,10 +1,10 @@
 package com.sandra.usuario.infrastructure.controller;
 
-
 import com.sandra.usuario.infrastructure.business.UsuarioService;
 import com.sandra.usuario.infrastructure.business.dto.EnderecoDTO;
 import com.sandra.usuario.infrastructure.business.dto.TelefoneDTO;
 import com.sandra.usuario.infrastructure.business.dto.UsuarioDTO;
+import com.sandra.usuario.infrastructure.entity.Usuario;
 import com.sandra.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +39,8 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email) {
-        UsuarioDTO resultado = usuarioService.buscarUsuarioPorEmail(email);
-        return ResponseEntity.ok(resultado);
+    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email) {
+        return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
     @DeleteMapping("/{email}")
@@ -50,30 +49,25 @@ public class UsuarioController {
         return ResponseEntity.ok().build();
     }
 
+    // --- MÉTODOS DE ATUALIZAÇÃO E CADASTROS ADICIONAIS ---
+
     @PutMapping
-    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(
-            @RequestBody UsuarioDTO dto,
-            @RequestHeader("Authorization") String token) {
-        // O ID aqui deve ser recuperado dentro do Service através do Token
-        // e mapeado de volta para o DTO de retorno.
+    public ResponseEntity<UsuarioDTO> atualizaDadosUsuario(@RequestBody UsuarioDTO dto,
+                                                           @RequestHeader("Authorization") String token) {
+        // CORREÇÃO: Nome do método ajustado para bater com o Service
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
 
-    @PutMapping("/endereco")
-    public ResponseEntity<EnderecoDTO> atualizaEndereco(
-            @RequestBody EnderecoDTO dto,
-            @RequestParam("id") Long id) {
-        // CORREÇÃO: Seta o ID no DTO antes de enviar para o Service
-        dto.setId(id);
-        return ResponseEntity.ok(usuarioService.atualizaEndereco(id, dto));
+    @PostMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> cadastroEndereco(@RequestBody EnderecoDTO dto,
+                                                        @RequestHeader("Authorization") String token) {
+        // CORREÇÃO: Usando EnderecoDTO para evitar erro de tipos incompatíveis
+        return ResponseEntity.ok(usuarioService.cadastroEndereco(token, dto));
     }
 
-    @PutMapping("/telefone")
-    public ResponseEntity<TelefoneDTO> atualizaTelefone(
-            @RequestBody TelefoneDTO dto,
-            @RequestParam("id") Long id) {
-        // CORREÇÃO: Seta o ID no DTO antes de enviar para o Service
-        dto.setId(id);
-        return ResponseEntity.ok(usuarioService.atualizaTelefone(id, dto));
+    @PostMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> cadastroTelefone(@RequestBody TelefoneDTO dto,
+                                                        @RequestHeader("Authorization") String token) {
+        return ResponseEntity.ok(usuarioService.cadastroTelefone(token, dto));
     }
 }
